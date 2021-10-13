@@ -23,19 +23,19 @@
 
         ```.\vcpkg\bootstrap-vcpkg.bat```
 
-        ```.\vcpkg\vcpkg install catch2:x64-windows nlohmann-json:x64-windows nana:x64-windows```
+        ```.\vcpkg\vcpkg install catch2:x64-windows nlohmann-json:x64-windows```
 
    - MAC:
 
         ```./vcpkg/bootstrap-vcpkg.sh```
 
-        ```./vcpkg/vcpkg install catch2:x64-osx nlohmann-json:x64-osx nana:x64-osx```
+        ```./vcpkg/vcpkg install catch2:x64-osx nlohmann-json:x64-osx```
 
     - LINUX:
 
         ```./vcpkg/bootstrap-vcpkg.sh```
 
-        ```./vcpkg/vcpkg install catch2:x64-linux nlohmann-json:x64-linux nana:x64-linux```
+        ```./vcpkg/vcpkg install catch2:x64-linux nlohmann-json:x64-linux```
 
 5. `mkdir build`
 6. `cd build`
