@@ -27,7 +27,7 @@ void run_gui()
     GUIController controller{ model, view };
 
     // Basically just calls view's run function
-    controller.execute();
+    //controller.execute();
 }
 
 int main(int argc, char** argv)
