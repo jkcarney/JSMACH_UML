@@ -21,12 +21,16 @@ using namespace std;
 class UMLServer {
 	private:
 		UMLModel* Model;
-		std::shared_ptr<Resource> ServerResources;
+		std::shared_ptr<Resource> AddClassResource;
+		std::shared_ptr<Resource> GetModelDataResource;
 		std::shared_ptr<Settings> ServerSetting;
 
 	public:
 		UMLServer(UMLModel* model);
 		~UMLServer();
+
+		void add_class_handler(const std::shared_ptr<Session> session);
+		void get_all_data_handler(const std::shared_ptr<Session> session);
 
 		int execute();
 

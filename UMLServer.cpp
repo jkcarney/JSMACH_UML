@@ -11,21 +11,27 @@
 #include <cstdlib>
 #include <restbed>
 #include <fstream>
+#include <nlohmann/json.hpp>
 
+
+using namespace std::placeholders;
 using namespace std;
 using namespace restbed;
-
-
-void get_method_handler(const std::shared_ptr<Session> session);
+using json = nlohmann::json;
 
 UMLServer::UMLServer(UMLModel* model)
 	: Model(model)
 {
-    ServerResources = make_shared< Resource >();
+	AddClassResource = make_shared< Resource >();
+	GetModelDataResource = make_shared< Resource >();
     ServerSetting = make_shared< Settings >();
 
-	ServerResources->set_path("/");
-	ServerResources->set_method_handler("GET", get_method_handler);
+	// need the std::bind because otherwise we can't use member functions directly
+	AddClassResource->set_path("/addclass");
+	AddClassResource->set_method_handler("POST", std::bind(&UMLServer::add_class_handler, this, _1));
+
+	GetModelDataResource->set_path("/data");
+	GetModelDataResource->set_method_handler("GET", std::bind(&UMLServer::add_class_handler, this, _1));
 
 	ServerSetting->set_port(8080);
 	ServerSetting->set_default_header("Connection", "close");
@@ -34,35 +40,26 @@ UMLServer::UMLServer(UMLModel* model)
 UMLServer::~UMLServer()
 {};
 
+void UMLServer::get_all_data_handler(const std::shared_ptr<Session> session)
+{
 
-void get_method_handler(const std::shared_ptr<Session> session)
+}
+
+void UMLServer::add_class_handler(const std::shared_ptr<Session> session)
 {
     const auto request = session->get_request();
-    const string fileName = "./resources/home.html";
-    ifstream stream(fileName, ifstream::in);
-
-    if (stream.is_open())
-    {
-        const string body = string(istreambuf_iterator< char >(stream), istreambuf_iterator< char >());
-
-        const multimap< string, string > headers
-        {
-            { "Content-Type", "text/html" },
-            { "Content-Length", ::to_string(body.length()) }
-        };
-
-        session->close(OK, body, headers);
-    }
-    else
-    {
-        session->close(NOT_FOUND);
-    }
+	multimap query = request->get_query_parameters();
+	const string className = query.find("class")->second;
+	
+    session->close(OK);
 }
 
 int UMLServer::execute()
 {
 	Service service;
-	service.publish(ServerResources);
+
+	service.publish(AddClassResource);
+
 	service.start(ServerSetting);
 	return EXIT_SUCCESS;
 }
