@@ -9,9 +9,14 @@ set(CMAKE_CXX_STANDARD_REQUIRED Off)
 find_package(nlohmann_json CONFIG REQUIRED)
 find_package(Catch2 CONFIG REQUIRED)
 
+find_path(RESTBED_INCLUDE_DIR restbed)
+find_library(RESTBED_LIBRARY restbed)
+include_directories(${RESTBED_INCLUDE_DIR})
+
+
 add_library(uml)
-target_sources(uml PRIVATE "GUIController.cpp" "GUIView.cpp" "UMLController.cpp" "UMLClass.cpp" "UMLRelationship.cpp" "UMLModel.cpp" "JSONFileSys.cpp" "UMLException.hpp" "ClassMethod.cpp" "ClassField.cpp" "MethodParameter.cpp" "ConsoleView.cpp")
-target_link_libraries(uml PRIVATE nlohmann_json nlohmann_json::nlohmann_json)
+target_sources(uml PRIVATE "UMLServer.cpp" "UMLController.cpp" "UMLClass.cpp" "UMLRelationship.cpp" "UMLModel.cpp" "JSONFileSys.cpp" "UMLException.hpp" "ClassMethod.cpp" "ClassField.cpp" "MethodParameter.cpp" "ConsoleView.cpp")
+target_link_libraries(uml PRIVATE nlohmann_json nlohmann_json::nlohmann_json ${RESTBED_LIBRARY})
 
 add_executable(jsmach_uml)
 target_sources(jsmach_uml PUBLIC main.cpp)

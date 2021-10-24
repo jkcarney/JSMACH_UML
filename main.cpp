@@ -4,9 +4,8 @@
 #include "UMLClass.h"
 #include "UMLController.h"
 #include "UMLModel.h"
-#include "GUIView.h"
-#include "GUIController.h"
 #include "UMLRelationship.h"
+#include "UMLServer.h"
 
 void run_cli()
 {
@@ -20,14 +19,10 @@ void run_gui()
     // Create model and view
     // View constructs stuff such as buttons and other UI elements
     UMLModel model;
-    GUIView view{ model };
+    UMLServer server{ &model };
 
-    // Construct controller
-    // Controller links view buttons with controller methods
-    GUIController controller{ model, view };
-
-    // Basically just calls view's run function
-    //controller.execute();
+    std::cout << "Starting server on localhost:8080" << std::endl;
+    server.execute();
 }
 
 int main(int argc, char** argv)
@@ -55,4 +50,3 @@ int main(int argc, char** argv)
 
     return 0;
 }
-
