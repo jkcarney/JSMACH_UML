@@ -19,6 +19,8 @@ void run_gui()
     // Create model and view
     // View constructs stuff such as buttons and other UI elements
     UMLModel model;
+    model.add_class("MyClass1");
+
     UMLServer server{ &model };
 
     std::cout << "Starting server on localhost:8080" << std::endl;

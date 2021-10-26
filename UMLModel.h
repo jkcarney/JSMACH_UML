@@ -7,9 +7,13 @@
 #include "ClassField.h"
 #include "ClassMethod.h"
 #include "MethodParameter.h"
+#include <nlohmann/json.hpp>
+
 
 // So I dont have to type const std::string& all the gdang time :)))
 using StrRef = const std::string&;
+using json = nlohmann::json;
+
 
 /*
     The UMLModel will hold all the data for the current running program. It will hold
@@ -74,6 +78,8 @@ class UMLModel {
             // Returns a string list that contains all the current classes in the model.
             const std::list <std::string> get_all_class_names();
 
+            const std::list<UMLClass> get_all_classes() const;
+
         #pragma endregion Model_Class_Operations
 
         #pragma region Model_Relationship_Operations
@@ -90,7 +96,7 @@ class UMLModel {
             const std::list <UMLRelationship> get_class_relationships(StrRef className);
 
             //Returns list of all current existing and valid relationships.
-            const std::list <UMLRelationship> get_all_relationships();
+            const std::list <UMLRelationship> get_all_relationships() const;
 
             //Called when a class is deleted
             //Checks if class being deleted is either a source or destination of a relationship
@@ -202,5 +208,7 @@ class UMLModel {
 
         #pragma endregion Model_JSON
 };
+
+void to_json(json& j, const UMLModel& uc);
 
 #endif

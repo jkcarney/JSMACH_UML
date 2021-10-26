@@ -1,6 +1,8 @@
 #include "UMLModel.h"
 #include "JSONFileSys.h"
+#include <nlohmann/json.hpp>
 
+using json = nlohmann::json;
 using StrRef = const std::string&;
 
 UMLModel::UMLModel() {}
@@ -145,6 +147,11 @@ std::list<UMLRelationship>::iterator UMLModel::get_relationship_iter_by_src_and_
         return result;
     }
 
+    const std::list<UMLClass> UMLModel::get_all_classes() const
+    {
+        return AllClasses;
+    }
+
 #pragma endregion Model_Class_Operations
 
 #pragma region Model_Relationship_Operations
@@ -209,7 +216,7 @@ std::list<UMLRelationship>::iterator UMLModel::get_relationship_iter_by_src_and_
          return result;
     }
 
-    const std::list <UMLRelationship> UMLModel::get_all_relationships()
+    const std::list <UMLRelationship> UMLModel::get_all_relationships() const
     {
         return AllRelationships;
     }
@@ -423,3 +430,9 @@ std::list<UMLRelationship>::iterator UMLModel::get_relationship_iter_by_src_and_
     }
 
 #pragma endregion Model_JSON
+
+    void to_json(json& j, const UMLModel& uc)
+    {
+        j["classes"] = uc.get_all_classes();
+        j["relationships"] = uc.get_all_relationships();
+    }

@@ -1,0 +1,26 @@
+{
+  "name": "jsmach_uml",
+  "version": "1.0.0",
+  "description": "JSMACH GUI ",
+  "main": "electron/main.js",
+  "directories": {
+    "test": "tests"
+  },
+  "scripts": {
+    "start": "electron .",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jkcarney/JSMACH_UML.git"
+  },
+  "author": "Joshua Carney",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/jkcarney/JSMACH_UML/issues"
+  },
+  "homepage": "https://github.com/jkcarney/JSMACH_UML#readme",
+  "devDependencies": {
+    "electron": "^15.3.0"
+  }
+}
